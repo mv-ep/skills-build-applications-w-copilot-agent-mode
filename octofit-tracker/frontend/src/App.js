@@ -7,8 +7,7 @@ import Users from './components/Users';
 import Workouts from './components/Workouts';
 import './App.css';
 
-const logoUrl =
-  'https://raw.githubusercontent.com/mv-ep/skills-build-applications-w-copilot-agent-mode/main/docs/octofitapp-small.png';
+const logoUrl = '/octofitapp-small.png';
 
 const navItems = [
   { to: '/activities', label: 'Activities' },
