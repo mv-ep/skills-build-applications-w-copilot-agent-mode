@@ -9,7 +9,11 @@ SECRET_KEY = 'replace-this-with-a-secure-key'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+codespace_name = os.environ.get('CODESPACE_NAME')
+codespace_host = f"{codespace_name}-8000.app.github.dev" if codespace_name else None
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+if codespace_host:
+    ALLOWED_HOSTS.append(codespace_host)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -63,13 +67,20 @@ DATABASES = {
         'CLIENT': {
             'host': 'localhost',
             'port': 27017,
-            'username': '',
-            'password': '',
             'authSource': 'admin',
             'authMechanism': 'SCRAM-SHA-1',
         },
     }
 }
+
+db_username = os.environ.get('MONGO_USERNAME')
+db_password = os.environ.get('MONGO_PASSWORD')
+if db_username and db_password:
+    DATABASES['default']['CLIENT']['username'] = db_username
+    DATABASES['default']['CLIENT']['password'] = db_password
+else:
+    DATABASES['default']['CLIENT'].pop('authSource', None)
+    DATABASES['default']['CLIENT'].pop('authMechanism', None)
 
 AUTH_PASSWORD_VALIDATORS = []
 
