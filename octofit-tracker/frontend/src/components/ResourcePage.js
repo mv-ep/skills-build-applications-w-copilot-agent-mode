@@ -31,7 +31,7 @@ function formatCellValue(value) {
   return String(value);
 }
 
-export default function ResourcePage({ resource, title }) {
+export default function ResourcePage({ resource, title, endpointTemplate = '' }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -45,6 +45,9 @@ export default function ResourcePage({ resource, title }) {
     try {
       setError('');
       console.log(`[${title}] REST API endpoint:`, endpoint);
+      if (endpointTemplate) {
+        console.log(`[${title}] REST API endpoint template:`, endpointTemplate);
+      }
       console.log(`[${title}] Fetch URL:`, fetchUrl);
       const response = await fetch(fetchUrl);
 
